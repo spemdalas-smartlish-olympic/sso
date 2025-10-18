@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spemdalas Smartlish Olympiad 2026</title>
+    <style>
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background: linear-gradient(135deg, #fff6e5 0%, #ffcc80 100%);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        header {
+            background: #ff9800;
+            padding: 25px 15px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+        header h1 {
+            color: white;
+            margin: 0;
+            font-size: 2.5em;
+        }
+        main {
+            max-width: 800px;
+            margin: 25px auto;
+            padding: 25px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .section {
+            border: 1px solid #ffb74d;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background: #fff8f0;
+        }
+        .section h2 {
+            color: #e65100;
+            margin-top: 0;
+        }
+        input, select, textarea {
+            padding: 10px;
+            border: 2px solid #ffa726;
+            border-radius: 6px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            background: #ff9800;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #ffa726;
+        }
+        footer {
+            text-align: center;
+            padding: 12px;
+            color: white;
+            background: #e65100;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🏆 Spemdalas Smartlish Olympiad 2026 🏆</h1>
+        <p>Ajang Prestasi Tingkat SMP</p>
+    </header>
+
+    <main>
+        <form id="registrationForm">
+            <div class="section">
+                <h2>📝 Data Peserta</h2>
+                <label for="nama">Nama Lengkap Peserta:</label>
+                <input type="text" id="nama" required>
+
+                <label for="sekolah">Asal Sekolah:</label>
+                <input type="text" id="sekolah" required>
+
+                <label for="lomba">Kategori Lomba:</label>
+                <select id="lomba" required>
+                    <option value="">Pilih Kategori</option>
+                    <option value="Olimpiade Matematika">Olimpiade Matematika</option>
+                    <option value="Olimpiade Bahasa inggris">Olimpiade Bahasa inggris</option>
+                    <option value="Olimpiade Ipas">Olimpiade Ipas</option>
+                    <option value="Story Telling"Story Telling</option>
+                      <option value="Tilawah">Tilawah</option>
+                </select>
+            </div>
+
+            <div class="section">
+                <h2>👨‍👩‍👦 Persetujuan Orang Tua/Wali</h2>
+                <label for="namaOrtu">Nama Lengkap Orang Tua/Wali:</label>
+                <input type="text" id="namaOrtu" required>
+
+                <label for="telpon">Nomor Telepon Orang Tua/Wali:</label>
+                <input type="tel" id="telpon" required pattern="[0-9]{10,13}" title="Nomor telepon minimal 10 digit">
+
+                <div>
+                    <input type="checkbox" id="persetujuan" required>
+                    <label for="persetujuan">Saya setuju dengan syarat dan ketentuan Smartlish Olympiad 2025.</label>
+                </div>
+
+                <label for="tandaTangan">Tanda Tangan Digital:</label>
+                <input type="text" id="tandaTangan" placeholder="Tulis nama lengkap Anda di sini" required>
+            </div>
+
+            <button type="submit">Kirim Pendaftaran</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Panitia Spemdalas Smartlish Olympiad</p>
+    </footer>
+
+    <script type="module">
+  // Import Firebase SDK
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+  // Konfigurasi Firebase kamu
+  const firebaseConfig = {
+    apiKey: "AIzaSyAh14cO0rdbGb874YBzb_qR6oKSCS0vdE",
+    authDomain: "spemdalas-smartlish-olymiad.firebaseapp.com",
+    databaseURL: "https://spemdalas-smartlish-olymiad-default-rtdb.firebaseio.com",
+    projectId: "spemdalas-smartlish-olymiad",
+    storageBucket: "spemdalas-smartlish-olymiad.firebasestorage.app",
+    messagingSenderId: "615347423523",
+    appId: "1:615347423523:web:3d09d42d86c046176ba496",
+    measurementId: "G-3MZHJXJC1P"
+  };
+
+  // Inisialisasi Firebase
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+
+  // Tangkap form
+  const form = document.getElementById('registrationForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const data = {
+      nama: document.getElementById('nama').value,
+      sekolah: document.getElementById('sekolah').value,
+      lomba: document.getElementById('lomba').value,
+      namaOrtu: document.getElementById('namaOrtu').value,
+      telpon: document.getElementById('telpon').value,
+      tandaTangan: document.getElementById('tandaTangan').value,
+      waktu: new Date().toLocaleString()
+    };
+
+    // Simpan ke Firebase Realtime Database
+    const dbRef = ref(database, 'pendaftaran/');
+    const newRef = push(dbRef);
+    set(newRef, data)
+      .then(() => {
+        alert("✅ Data berhasil dikirim ke Firebase!");
+        form.reset();
+      })
+      .catch((error) => {
+        alert("❌ Gagal mengirim data: " + error.message);
+      });
+  });
+</script>
+
+
+</body>
+</html>
